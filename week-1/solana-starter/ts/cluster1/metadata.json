@@ -1,0 +1,15 @@
+{
+  "name": "Turbin3",
+  "symbol": "TRB",
+  "description": "A token representing bullish vibes on the Solana blockchain.",
+  "image": "https://beige-recent-peafowl-739.mypinata.cloud/ipfs/bafkreia3yxum2nu2syjhntcwvnsz7jgrox4rqaa54fkx3q66cennne36xa/turbine.png",
+  "seller_fee_basis_points": 0,
+  "properties": {
+    "files": [
+      {
+        "uri": "https://beige-recent-peafowl-739.mypinata.cloud/ipfs/bafkreia3yxum2nu2syjhntcwvnsz7jgrox4rqaa54fkx3q66cennne36xa/turbine.png",
+        "type": "image/png"
+      }
+    ]
+  }
+}
