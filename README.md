@@ -8,5 +8,7 @@ Welcome to the Turbin3 Builder Cohort repository! This serves as a centralized h
 - **Week 0**: [Turbin3 Week 0](https://github.com/priyanshpatel18/Q3_25_Builder_priyanshpatel18/tree/main/prereq-assignment)
 
 - **Week 1**: [Turbin3 Week 1](https://github.com/priyanshpatel18/Q3_25_Builder_priyanshpatel18/tree/main/week-1)
-- 
-- **Week 2**: [Turbin3 Week 1](https://github.com/priyanshpatel18/Q3_25_Builder_priyanshpatel18/tree/main/week-2)
+
+- **Week 2**: [Turbin3 Week 2](https://github.com/priyanshpatel18/Q3_25_Builder_priyanshpatel18/tree/main/week-2)
+
+- **Week 3**: [Turbin3 Week 3](https://github.com/priyanshpatel18/Q3_25_Builder_priyanshpatel18/tree/main/week-3)
