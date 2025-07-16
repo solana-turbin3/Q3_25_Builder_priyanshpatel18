@@ -1,8 +1,7 @@
 use anchor_lang::prelude::*;
 
-declare_id!("5EfKLXSFCVVEZig29bgRynsgBUBXnkMKnPPdBkstRPef");
+declare_id!("4SQsPr5ciucW1s8QNkDKPKLyVjR3smH2nEZbezwc2QGG");
 
-pub mod constants;
 pub mod errors;
 pub mod instructions;
 pub mod states;
@@ -33,5 +32,9 @@ pub mod staking {
 
     pub fn unstake(ctx: Context<Unstake>) -> Result<()> {
         ctx.accounts.unstake()
+    }
+
+    pub fn claim_rewards(ctx: Context<Claim>) -> Result<()> {
+        ctx.accounts.claim()
     }
 }

@@ -11,10 +11,10 @@ pub struct Stake<'info> {
     #[account(mut)]
     pub user: Signer<'info>,
 
-    /// User's staking account to update points and stake count
+    /// User's staking account to update stake count
     #[account(
         mut,
-        seeds = [b"user", user.key.as_ref()],
+        seeds = [b"user", user.key().as_ref()],
         bump = user_account.bump
     )]
     pub user_account: Account<'info, UserAccount>,
@@ -52,7 +52,7 @@ pub struct Stake<'info> {
     #[account(
         init,                                                         // Create new account
         payer = user,                                                // User pays rent
-        seeds = [b"stake", user.key.as_ref(), nft_mint.key().as_ref()], // Unique per user+NFT
+        seeds = [b"stake", user.key().as_ref(), nft_mint.key().as_ref()], // Unique per user+NFT
         bump,                                                        // Store bump
         space = 8 + StakeAccount::INIT_SPACE,                       // Account size
     )]
@@ -63,7 +63,7 @@ pub struct Stake<'info> {
     pub associated_token_program: Program<'info, AssociatedToken>,
     pub system_program: Program<'info, System>,
     pub rent: Sysvar<'info, Rent>,
-    pub clock: Sysvar<'info, Clock>,
+    pub clock: Sysvar<'info, Clock>, // Needed for timestamp
 }
 
 impl<'info> Stake<'info> {
@@ -73,18 +73,13 @@ impl<'info> Stake<'info> {
 
         // Record stake metadata for this specific NFT
         self.stake_account.set_inner(StakeAccount {
-            owner: self.user.key(),                 // Who staked this NFT
-            mint: self.nft_mint.key(),             // Which NFT was staked
-            stake_at: clock.unix_timestamp,        // When it was staked
-            bump: bumps.stake_account,             // PDA bump
+            owner: self.user.key(),         // Who staked this NFT
+            mint: self.nft_mint.key(),      // Which NFT was staked
+            stake_at: clock.unix_timestamp, // When it was staked
+            bump: bumps.stake_account,      // PDA bump
         });
 
-        // Update user's staking statistics
-        self.user_account.set_inner(UserAccount {
-            points: self.config.points_per_stake as u32,  // Award points for staking
-            amount_staked: self.user_account.amount_staked + 1, // Increment stake count
-            bump: self.user_account.bump,                       // Preserve bump
-        });
+        self.user_account.amount_staked = self.user_account.amount_staked.saturating_add(1);
 
         // Transfer NFT from user to vault
         let cpi_accounts = Transfer {
@@ -93,8 +88,9 @@ impl<'info> Stake<'info> {
             authority: self.user.to_account_info(),
         };
 
+        // CPI Context
         let cpi_ctx = CpiContext::new(self.token_program.to_account_info(), cpi_accounts);
-        transfer(cpi_ctx, 1)?;  // Transfer 1 NFT token
+        transfer(cpi_ctx, 1)?; // Transfer 1 NFT token
 
         Ok(())
     }
