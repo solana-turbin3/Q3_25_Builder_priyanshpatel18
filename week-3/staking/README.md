@@ -180,7 +180,7 @@ The following transactions demonstrate the complete vault lifecycle on devnet:
 **Stake NFT 2:**
 [`4jyRNgh5zuxLuTapemMwRABJzS58aYvb69sZcK6XKosRDm7aSB4yTL3PT4nwXCuzkMC7HJku1c5vqXknySDrRmrn`](https://explorer.solana.com/transaction/4jyRNgh5zuxLuTapemMwRABJzS58aYvb69sZcK6XKosRDm7aSB4yTL3PT4nwXCuzkMC7HJku1c5vqXknySDrRmrn?cluster=devnet)  
 
-**Unstake NFT 2:**
+**Claim Rewards:**
 [`5e1721JyTgL173whKwcpEH1U25g8hM5KBVJN9xA1KouqMxuiK4MidLGVAPDVBWE6LM4J44prukF4oPeCfhh7Yad4`](https://explorer.solana.com/transaction/5e1721JyTgL173whKwcpEH1U25g8hM5KBVJN9xA1KouqMxuiK4MidLGVAPDVBWE6LM4J44prukF4oPeCfhh7Yad4?cluster=devnet)
 
 ## Error Handling
