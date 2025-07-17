@@ -1,10 +1,10 @@
 use anchor_lang::prelude::*;
 
-declare_id!("4SQsPr5ciucW1s8QNkDKPKLyVjR3smH2nEZbezwc2QGG");
+declare_id!("DND8bE3qTXHMJmNQz1GgT7Ci1mkVtCy12GmK3jnWt5DF");
 
-pub mod errors;
 pub mod instructions;
 pub mod states;
+pub mod errors;
 
 pub use instructions::*;
 

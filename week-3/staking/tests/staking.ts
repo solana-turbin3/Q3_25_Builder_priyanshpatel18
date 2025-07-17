@@ -13,7 +13,7 @@ import {
   PublicKey,
   SystemProgram,
   SYSVAR_CLOCK_PUBKEY,
-  SYSVAR_RENT_PUBKEY,
+  SYSVAR_RENT_PUBKEY
 } from "@solana/web3.js";
 import { expect } from "chai";
 import { Staking } from "../target/types/staking";
@@ -51,9 +51,14 @@ describe("staking flows", () => {
 
   before(async () => {
     // Fund user with SOL
-    await provider.connection.confirmTransaction(
-      await provider.connection.requestAirdrop(user.publicKey, 2 * anchor.web3.LAMPORTS_PER_SOL)
+    const transferTx = new anchor.web3.Transaction().add(
+      anchor.web3.SystemProgram.transfer({
+        fromPubkey: admin.publicKey,
+        toPubkey: user.publicKey,
+        lamports: 2 * anchor.web3.LAMPORTS_PER_SOL,
+      })
     );
+    await provider.sendAndConfirm(transferTx, [admin]);
 
     // Derive common PDAs
     [configPda] = PublicKey.findProgramAddressSync(
@@ -76,9 +81,14 @@ describe("staking flows", () => {
 
     while (true) {
       // Send a dummy tx to force block production
-      await provider.connection.confirmTransaction(
-        await provider.connection.requestAirdrop(Keypair.generate().publicKey, 1_000_000)
+      const tx = new anchor.web3.Transaction().add(
+        anchor.web3.SystemProgram.transfer({
+          fromPubkey: admin.publicKey,
+          toPubkey: admin.publicKey,
+          lamports: 0,
+        })
       );
+      await provider.sendAndConfirm(tx, [admin]);
 
       const current = await provider.connection.getBlockTime(await provider.connection.getSlot());
       if (current - start >= seconds) break;

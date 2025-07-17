@@ -55,4 +55,3 @@ impl<'info> InitializeConfig<'info> {
         Ok(())
     }
 }
-

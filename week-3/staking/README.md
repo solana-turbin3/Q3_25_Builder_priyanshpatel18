@@ -19,6 +19,7 @@ A Solana program that allows users to stake NFTs and earn reward points. The pro
 2. **Initialize User** - Creates a user account for staking participation
 3. **Stake** - Stakes an NFT and awards points to the user
 4. **Unstake** - Unstakes an NFT after the freeze period has passed
+5. **Claim Rewards** - Claims reward tokens for staked NFTs
 
 ### Account Types
 
@@ -114,6 +115,22 @@ await program.methods
     clock: SYSVAR_CLOCK_PUBKEY,
   })
   .rpc();
+
+// Claim Rewards
+ await program.methods
+  .claimRewards()
+  .accounts({
+    user: user.publicKey,
+    userAccount: userAccountPda,
+    config: configPda,
+    rewardMint: rewardMintPda,
+    tokenProgram: TOKEN_PROGRAM_ID,
+    associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
+    systemProgram: SystemProgram.programId,
+    rent: SYSVAR_RENT_PUBKEY,
+  })
+  .signers([user])
+  .rpc();
 ```
 
 ## Testing
@@ -142,23 +159,29 @@ Test coverage includes:
 ## Deployment Information
 
 ### Devnet
-- **Program ID**: [`5EfKLXSFCVVEZig29bgRynsgBUBXnkMKnPPdBkstRPef`](https://explorer.solana.com/address/5EfKLXSFCVVEZig29bgRynsgBUBXnkMKnPPdBkstRPef?cluster=devnet)
+- **Program ID**: [`DND8bE3qTXHMJmNQz1GgT7Ci1mkVtCy12GmK3jnWt5DF`](https://explorer.solana.com/address/DND8bE3qTXHMJmNQz1GgT7Ci1mkVtCy12GmK3jnWt5DF?cluster=devnet)
 
 ### Example Transactions
 
 The following transactions demonstrate the complete vault lifecycle on devnet:
 
 **Initialize Config:**
-[`4Fzaewjriw2P9mhZSKVvwbDnheXAQjSSLAcQ6cQNYWfwQEwqXJJE12b4VsXm1E1UXwWXWs3LMrZHABvVEvxpCD7q`](https://explorer.solana.com/transaction/4Fzaewjriw2P9mhZSKVvwbDnheXAQjSSLAcQ6cQNYWfwQEwqXJJE12b4VsXm1E1UXwWXWs3LMrZHABvVEvxpCD7q?cluster=devnet)
+[`WqBsemoPm2F2xjx7ssdq4wmuzeb2mX63KVgi7APQEpAmjDbZX3qrBUgjvTyQDvNfaR4weZbK3xTPQpCAPrTURhU`](https://explorer.solana.com/transaction/WqBsemoPm2F2xjx7ssdq4wmuzeb2mX63KVgi7APQEpAmjDbZX3qrBUgjvTyQDvNfaR4weZbK3xTPQpCAPrTURhU?cluster=devnet)
 
 **Initialize User:**
-[`5D7z5qhNW2nVY35o5PD1aTYGxqAAoB5dobgDq6oFxZ73tQi84Zk5Ga5ZasNRm4XkDJsi5r5owVFLpT9f2ifNXqHj`](https://explorer.solana.com/transaction/5D7z5qhNW2nVY35o5PD1aTYGxqAAoB5dobgDq6oFxZ73tQi84Zk5Ga5ZasNRm4XkDJsi5r5owVFLpT9f2ifNXqHj?cluster=devnet)
+[`5QbreKJEKnoMCBEbHw4z6bjSfWWUU7GEYuAeJTbVjRwRSe3kc4nuszdbjPMPYxM1D4v1PYHozm8giVFM5TTFkta8`](https://explorer.solana.com/transaction/5QbreKJEKnoMCBEbHw4z6bjSfWWUU7GEYuAeJTbVjRwRSe3kc4nuszdbjPMPYxM1D4v1PYHozm8giVFM5TTFkta8?cluster=devnet)
 
-**Stake:**
-[`2ofBRY1JPjW6uKJFGQmcpd22fhk1VarZsVog1DNFiUkvWb8RpEb959Mr6WS9Jjb1QHpW5Yh5TrUoLrqnxR9DgG7x`](https://explorer.solana.com/transaction/2ofBRY1JPjW6uKJFGQmcpd22fhk1VarZsVog1DNFiUkvWb8RpEb959Mr6WS9Jjb1QHpW5Yh5TrUoLrqnxR9DgG7x?cluster=devnet)  
+**Stake NFT 1:**
+[`5XcwroqdoSyqw8RRmSYHQRkKUArMEKrT3iKQwuaS4CgvYmA4o9fsqJSpSbWu1XXAucqkTT7XcDQ7QXXnQoN3Tkan`](https://explorer.solana.com/transaction/5XcwroqdoSyqw8RRmSYHQRkKUArMEKrT3iKQwuaS4CgvYmA4o9fsqJSpSbWu1XXAucqkTT7XcDQ7QXXnQoN3Tkan?cluster=devnet)  
 
-**Unstake:**
-[`5PmvsHHuXr5u7fpNPfrJ2ymZmNd8uzHoHL1SBddVGwRZXkD4jAcss3DZ9MZawqidvjsvbxHDd7bg9Bc3vWhp37rP`](https://explorer.solana.com/transaction/5PmvsHHuXr5u7fpNPfrJ2ymZmNd8uzHoHL1SBddVGwRZXkD4jAcss3DZ9MZawqidvjsvbxHDd7bg9Bc3vWhp37rP?cluster=devnet)
+**Unstake NFT 1:**
+[`55aiLj9PcEye4xYnW58Ys1TfXF1ER4YvSZWzkjtuSkhEnd94QYG1Nq9qSguGpCqSGbSPyCayLCAG3zbqCbv5CymS`](https://explorer.solana.com/transaction/55aiLj9PcEye4xYnW58Ys1TfXF1ER4YvSZWzkjtuSkhEnd94QYG1Nq9qSguGpCqSGbSPyCayLCAG3zbqCbv5CymS?cluster=devnet)
+
+**Stake NFT 2:**
+[`4jyRNgh5zuxLuTapemMwRABJzS58aYvb69sZcK6XKosRDm7aSB4yTL3PT4nwXCuzkMC7HJku1c5vqXknySDrRmrn`](https://explorer.solana.com/transaction/4jyRNgh5zuxLuTapemMwRABJzS58aYvb69sZcK6XKosRDm7aSB4yTL3PT4nwXCuzkMC7HJku1c5vqXknySDrRmrn?cluster=devnet)  
+
+**Unstake NFT 2:**
+[`5e1721JyTgL173whKwcpEH1U25g8hM5KBVJN9xA1KouqMxuiK4MidLGVAPDVBWE6LM4J44prukF4oPeCfhh7Yad4`](https://explorer.solana.com/transaction/5e1721JyTgL173whKwcpEH1U25g8hM5KBVJN9xA1KouqMxuiK4MidLGVAPDVBWE6LM4J44prukF4oPeCfhh7Yad4?cluster=devnet)
 
 ## Error Handling
 

@@ -94,7 +94,7 @@ impl<'info> Unstake<'info> {
 
         // Generate signer seeds for config PDA
         let seeds: &[&[u8]] = &[b"config", &[self.config.bump]];
-        let signer = &[seeds];
+        let signer: &[&[&[u8]]; 1] = &[seeds];
 
         // Transfer the NFT token from vault ATA back to user's wallet
         let cpi_accounts = Transfer {
