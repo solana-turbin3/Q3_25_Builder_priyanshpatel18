@@ -7,6 +7,7 @@ use anchor_spl::{
     },
 };
 
+use crate::constants::*;
 use crate::states::Escrow;
 
 #[derive(Accounts)]
@@ -42,7 +43,7 @@ pub struct Refund<'info> {
         close = maker,
         has_one = mint_a,
         has_one = maker,
-        seeds = [b"escrow", maker.key().as_ref(), escrow.seed.to_le_bytes().as_ref()],
+        seeds = [SEED.as_bytes(), maker.key().as_ref(), escrow.seed.to_le_bytes().as_ref()],
         bump = escrow.bump,
     )]
     pub escrow: Account<'info, Escrow>,
@@ -70,7 +71,7 @@ impl<'info> Refund<'info> {
     pub fn refund_and_close_vault(&mut self) -> Result<()> {
         // Create PDA signer seeds for vault authority
         let signer_seeds: &[&[&[u8]]; 1] = &[&[
-            b"escrow", 
+            SEED.as_bytes(), 
             self.maker.key.as_ref(), 
             &self.escrow.seed.to_le_bytes()[..],
             &[self.escrow.bump]
