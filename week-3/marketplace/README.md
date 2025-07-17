@@ -13,6 +13,8 @@ A decentralized NFT marketplace built on the Solana blockchain using the Anchor 
 
 ## Program Structure
 
+![System Design](./SYSTEM_DESIGN.png)
+
 ### Core Instructions
 
 - `initialize_marketplace`: Set up the marketplace with admin and fee configuration
