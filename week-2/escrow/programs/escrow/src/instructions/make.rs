@@ -47,7 +47,7 @@ pub struct Make<'info> {
         payer = maker,
         seeds = [SEED.as_bytes(), maker.key().as_ref(), seed.to_le_bytes().as_ref()],
         bump,
-        space = 8 + Escrow::INIT_SPACE,
+        space = ANCHOR_DISCREMINATOR + Escrow::INIT_SPACE,
     )]
     pub escrow: Account<'info, Escrow>,
 
