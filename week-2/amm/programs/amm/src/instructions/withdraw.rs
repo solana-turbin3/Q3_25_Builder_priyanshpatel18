@@ -147,7 +147,7 @@ impl<'info> Withdraw<'info> {
                     self.vault_y.amount,   // Current vault Y balance
                     self.mint_lp.supply,   // Current LP token supply
                     amount,                // LP tokens being burned
-                    6,                     // Precision for calculations
+                    1_000_000,                     // Scaled precision for calculations
                 )
                 .unwrap();
                 (amounts.x, amounts.y)
