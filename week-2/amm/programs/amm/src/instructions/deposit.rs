@@ -148,7 +148,7 @@ impl<'info> Deposit<'info> {
                     self.vault_y.amount, 
                     self.mint_lp.supply, 
                     amount, 
-                    6  // Precision for calculations
+                    1_000_000 // Scaled precision for calculations
                 ).unwrap();
                 (amounts.x, amounts.y)
             }
