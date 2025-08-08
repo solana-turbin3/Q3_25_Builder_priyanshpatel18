@@ -4,6 +4,7 @@ use anchor_spl::{
     token_interface::{ Mint, TokenAccount, TransferChecked, TokenInterface, transfer_checked}
 };
 
+use crate::constants::*;
 use crate::states::Escrow;
 
 #[derive(Accounts)]
@@ -44,9 +45,9 @@ pub struct Make<'info> {
     #[account(
         init,
         payer = maker,
-        seeds = [b"escrow", maker.key().as_ref(), seed.to_le_bytes().as_ref()],
+        seeds = [SEED.as_bytes(), maker.key().as_ref(), seed.to_le_bytes().as_ref()],
         bump,
-        space = 8 + Escrow::INIT_SPACE,
+        space = ANCHOR_DISCREMINATOR + Escrow::INIT_SPACE,
     )]
     pub escrow: Account<'info, Escrow>,
 
